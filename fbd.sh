@@ -28,9 +28,20 @@ compile() {
 	fi	
 }
 
+usage() {
+    gum style "usage: fbd [language] [input] [output] [compiler_parameters]" $colors
+    exit 0
+}
+
 # Print """""""""logo"""""""""
 gum style "FuckBuild." $colors
 sleep 0.25
+
+if [[ $# -eq 1 ]]; then
+    if [[ "$1" =~ ^--?h(e(l(p?)?)?)?$ ]]; then
+        usage
+    fi
+fi
 
 if [[ $# -ge 3 ]]; then
     if [[ $# -ge 4 ]]; then
@@ -51,7 +62,7 @@ if [[ $# -ge 3 ]]; then
             exit 1
         fi
         gum style "compiling a "$lang" program $filename.$extension to "$output_filename" with parameters '$parameters', right? (Y/n) " $colors
-        read -s input
+        read input
         if [[ $input == "n" || $input == "N"  ]]; then
             gum style "oh then you fucked up, don't blame me, duh." $colors
             exit 1
@@ -76,7 +87,7 @@ if [[ $# -ge 3 ]]; then
             exit 1
         fi
         gum style "compiling a "$lang" program $filename.$extension to "$output_filename", right? (Y/n) " $colors
-        read -s assumption_input
+        read assumption_input
         if [[ $assumption_input == "n" || $assumption_input == "N" ]]; then
             gum style "oh then you fucked up, don't blame me, duh." $colors
             exit 1
